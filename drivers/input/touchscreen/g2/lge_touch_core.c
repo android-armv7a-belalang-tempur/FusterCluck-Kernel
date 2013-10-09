@@ -3460,6 +3460,9 @@ static irqreturn_t touch_thread_irq_handler(int irq, void *dev_id)
 		TOUCH_INFO_MSG("gesture wakeup\n");
 		queue_delayed_work(touch_wq, &ts->work_gesture_wakeup,
 				msecs_to_jiffies(0));
+		input_report_key(ts->input_dev, KEY_POWER, BUTTON_PRESSED);
+		input_report_key(ts->input_dev, KEY_POWER, BUTTON_RELEASED);
+		input_sync(ts->input_dev);
 		return IRQ_HANDLED;
 	}
 #endif
