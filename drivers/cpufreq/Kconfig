@@ -132,7 +132,16 @@ config CPU_FREQ_DEFAULT_GOV_INTELLIMM
         help
           Use the CPUFreq governor 'intelliminmax' as default. This is
           governor will use only 3 different frequencies, idle, UI and max
-         
+       
+config CPU_FREQ_DEFAULT_GOV_BACON
+	bool "bacon"
+	select CPU_FREQ_GOV_BACON
+	help
+	  Use the CPUFreq governor 'bacon' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'bacon' governor for latency-sensitive workloads.  
+
 config CPU_FREQ_DEFAULT_GOV_ZZMOOVE
 	  bool "zzmoove"
 	  select CPU_FREQ_GOV_ZZMOOVE
@@ -289,7 +298,24 @@ config CPU_FREQ_GOV_INTELLIMM
           For details, take a look at linux/Documentation/cpu-freq.
 
           If in doubt, say N.
-          
+
+config CPU_FREQ_GOV_BACON
+	tristate "'bacon' cpufreq policy governor"
+	help
+	  'bacon' - This driver adds a dynamic cpufreq policy governor
+	  designed for latency-sensitive workloads.
+
+	  This governor attempts to reduce the latency of clock
+	  increases so that the system is more responsive to
+	  interactive workloads.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_bacon.
+
+	  For details, take a look at linux/Documentation/cpu-freq.
+
+	  If in doubt, say N.
+
 config CPU_FREQ_GOV_ZZMOOVE
 	tristate "'zzmoove' cpufreq governor"
  	depends on CPU_FREQ
