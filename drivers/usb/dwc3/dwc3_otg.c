@@ -45,6 +45,11 @@
 static int max_chgr_retry_count = MAX_INVALID_CHRGR_RETRY;
 module_param(max_chgr_retry_count, int, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(max_chgr_retry_count, "Max invalid charger retry count");
+
+#ifdef CONFIG_FORCE_FAST_CHARGE
+int usb_power_curr_now = 500;
+#endif
+
 static void dwc3_otg_reset(struct dwc3_otg *dotg);
 
 static void dwc3_otg_notify_host_mode(struct usb_otg *otg, int host_mode);
@@ -677,6 +682,13 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 		return 0;
 
 	dev_info(phy->dev, "Avail curr from USB = %u\n", mA);
+#ifdef CONFIG_FORCE_FAST_CHARGE
+	usb_power_curr_now = mA;
+	if (mA > 300)
+		smb349_thermal_mitigation_update(mA);
+	else
+		smb349_thermal_mitigation_update(300);
+#endif
 
 /* B2-BSP-USB@lge.com make psy getter and move it above power_supply_type setter. 2014-02-06 */
 #ifdef CONFIG_LGE_PM
