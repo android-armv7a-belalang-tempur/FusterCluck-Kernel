@@ -3112,3 +3112,9 @@ config MSM_LIMITER
 	depends on (MACH_LGE || POWERSUSPEND || HAS_EARLYSUSPEND)
 	default n
 	help
+
+
+config PVS_LEVEL_INTERFACE
+	bool "Expose PVS level information in sys fs (Boeffla-Kernel)"
+	help
+	 Allow PVS level to be shown in Boeffla-Config app
