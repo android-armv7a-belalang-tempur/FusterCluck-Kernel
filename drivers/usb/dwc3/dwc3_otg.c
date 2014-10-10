@@ -26,6 +26,7 @@
 #include "xhci.h"
 
 #ifdef CONFIG_FORCE_FAST_CHARGE
+#include <linux/mutex.h>
 #include <linux/fastchg.h>
 #endif
 
@@ -48,6 +49,7 @@ MODULE_PARM_DESC(max_chgr_retry_count, "Max invalid charger retry count");
 
 #ifdef CONFIG_FORCE_FAST_CHARGE
 int usb_power_curr_now = 500;
+struct mutex fast_charge_lock;
 #endif
 
 static void dwc3_otg_reset(struct dwc3_otg *dotg);
@@ -682,7 +684,8 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 		return 0;
 
 	dev_info(phy->dev, "Avail curr from USB = %u\n", mA);
-#ifdef CONFIG_FORCE_FAST_CHARGE
+#if defined(CONFIG_FORCE_FAST_CHARGE) && !defined(CONFIG_SMB349_VZW_FAST_CHG)
+	mutex_lock(&fast_charge_lock);
 	usb_power_curr_now = mA;
 	if (mA > 300) {
 		if (force_fast_charge != force_fast_charge_temp)
@@ -698,6 +701,7 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 				force_fast_charge);
 		smb349_thermal_mitigation_update(300);
 	}
+	mutex_unlock(&fast_charge_lock);
 #endif
 
 /* B2-BSP-USB@lge.com make psy getter and move it above power_supply_type setter. 2014-02-06 */
@@ -1250,6 +1254,10 @@ int dwc3_otg_init(struct dwc3 *dwc)
 
 	dev_dbg(dwc->dev, "dwc3_otg_init\n");
 
+#ifdef CONFIG_FORCE_FAST_CHARGE
+	mutex_init(&fast_charge_lock);
+#endif
+
 	/*
 	 * GHWPARAMS6[10] bit is SRPSupport.
 	 * This bit also reflects DWC_USB3_EN_OTG
@@ -1385,5 +1393,8 @@ void dwc3_otg_exit(struct dwc3 *dwc)
 	if (touch_otg_wq)
 		destroy_workqueue(touch_otg_wq);
 #endif
+
+#ifdef CONFIG_FORCE_FAST_CHARGE
+	mutex_destroy(&fast_charge_lock);
 #endif
 }
