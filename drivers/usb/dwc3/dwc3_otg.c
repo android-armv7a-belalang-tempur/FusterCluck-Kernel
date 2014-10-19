@@ -49,7 +49,7 @@ MODULE_PARM_DESC(max_chgr_retry_count, "Max invalid charger retry count");
 
 #ifdef CONFIG_FORCE_FAST_CHARGE
 int usb_power_curr_now = 500;
-struct mutex fast_charge_lock;
+static DEFINE_MUTEX(fast_charge_lock);
 #endif
 
 static void dwc3_otg_reset(struct dwc3_otg *dotg);
@@ -1254,10 +1254,6 @@ int dwc3_otg_init(struct dwc3 *dwc)
 
 	dev_dbg(dwc->dev, "dwc3_otg_init\n");
 
-#ifdef CONFIG_FORCE_FAST_CHARGE
-	mutex_init(&fast_charge_lock);
-#endif
-
 	/*
 	 * GHWPARAMS6[10] bit is SRPSupport.
 	 * This bit also reflects DWC_USB3_EN_OTG
@@ -1392,9 +1388,5 @@ void dwc3_otg_exit(struct dwc3 *dwc)
 #if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G2) || defined (CONFIG_MACH_MSM8974_TIGERS) || defined(CONFIG_MACH_MSM8974_B1_KR) || defined(CONFIG_MACH_MSM8974_B1W)
 	if (touch_otg_wq)
 		destroy_workqueue(touch_otg_wq);
-#endif
-
-#ifdef CONFIG_FORCE_FAST_CHARGE
-	mutex_destroy(&fast_charge_lock);
 #endif
 }
