@@ -3106,3 +3106,9 @@ config HAS_MACH_MEMUTILS
 	bool "Motorola MSM memcpy enhancements"
 	help
 	Faster memcpy performance for Krait
+
+config MSM_LIMITER
+	bool "MSM Frequency Limiter Driver"
+	depends on (MACH_LGE || POWERSUSPEND || HAS_EARLYSUSPEND)
+	default n
+	help
