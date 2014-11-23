@@ -2143,14 +2143,14 @@ int cpufreq_set_freq(unsigned int max_freq, unsigned int min_freq,
 	} else {
 		cpu_policy = __cpufreq_cpu_get(cpu, 1);
 		if (!cpu_policy) {
-			put_online_cpus();
-			return -EINVAL;
+			val = per_cpu(cpufreq_policy_save, cpu).gov;
+			goto invalid;
 		}
 
 		if (lock_policy_rwsem_write(cpu) < 0) {
 			__cpufreq_cpu_put(cpu_policy, true);
-			put_online_cpus();
-			return -EINVAL;
+			val = per_cpu(cpufreq_policy_save, cpu).gov;
+			goto invalid;
 		}
 
 		if (max_freq && max_freq >= cpu_policy->min) {
@@ -2166,6 +2166,7 @@ int cpufreq_set_freq(unsigned int max_freq, unsigned int min_freq,
 
 		__cpufreq_cpu_put(cpu_policy, true);
 	}
+invalid:
 	put_online_cpus();
 
 	return ret;
