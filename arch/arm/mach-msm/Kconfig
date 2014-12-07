@@ -3101,6 +3101,13 @@ config BRICKED_HOTPLUG
 	  (up/down hotplug based on load)
 endif
 
+config FORCE_FAST_CHARGE
+	bool "Force AC charge mode at will"
+	default n
+	help
+		A simple sysfs interface to force adapters that
+		are detected as USB to charge as AC.
+
 config HAS_MACH_MEMUTILS
 	default n
 	bool "Motorola MSM memcpy enhancements"
