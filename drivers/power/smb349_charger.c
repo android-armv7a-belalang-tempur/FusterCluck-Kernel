@@ -1817,12 +1817,12 @@ smb349_set_thermal_chg_current_set(const char *val, struct kernel_param *kp)
 				usb_power_curr_now,
 				current_now);
 #endif
-		if (new_thermal_mitigation != smb349_chg->chg_current_te) {
-			smb349_chg->chg_current_te = new_thermal_mitigation;
-			cancel_delayed_work_sync(&smb349_chg->battemp_work);
-			schedule_delayed_work(&smb349_chg->battemp_work, HZ*1);
+		if (new_thermal_mitigation != the_smb349_chg->chg_current_te) {
+			the_smb349_chg->chg_current_te = new_thermal_mitigation;
 			/* update smb349_thermal_mitigation */
 			smb349_thermal_mitigation = new_thermal_mitigation;
+			cancel_delayed_work_sync(&the_smb349_chg->battemp_work);
+			schedule_delayed_work(&the_smb349_chg->battemp_work, HZ*1);
 			pr_info("thermal-engine: restarting battemp_work\n");
 		}
 		mutex_unlock(&smb349_fast_charge_lock);
@@ -1928,12 +1928,12 @@ int smb349_thermal_mitigation_update(int value)
 		else if (batt_state_check == 2)
 			new_thermal_mitigation = 300;
 
-		if (new_thermal_mitigation != smb349_chg->chg_current_te) {
-			smb349_chg->chg_current_te = new_thermal_mitigation;
-			cancel_delayed_work_sync(&smb349_chg->battemp_work);
-			schedule_delayed_work(&smb349_chg->battemp_work, HZ*1);
+		if (new_thermal_mitigation != the_smb349_chg->chg_current_te) {
+			the_smb349_chg->chg_current_te = new_thermal_mitigation;
 			/* update smb349_thermal_mitigation */
 			smb349_thermal_mitigation = new_thermal_mitigation;
+			cancel_delayed_work_sync(&the_smb349_chg->battemp_work);
+			schedule_delayed_work(&the_smb349_chg->battemp_work, HZ*1);
 			pr_info("thermal-engine: restarting battemp_work\n");
 		}
 	}
