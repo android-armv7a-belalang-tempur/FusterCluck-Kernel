@@ -40,7 +40,7 @@ mkdir -p out/g2
 mkdir -p ozip
 
 
-Begin commands
+# Begin commands
  rm -rf out/g2/*
 			export ARCH=arm
 			export CROSS_COMPILE=$toolchain/"$toolchain2"
