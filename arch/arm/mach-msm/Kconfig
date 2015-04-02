@@ -3116,9 +3116,11 @@ config HAS_MACH_MEMUTILS
 
 config MSM_LIMITER
 	bool "MSM Frequency Limiter Driver"
-	depends on (MACH_LGE || POWERSUSPEND || HAS_EARLYSUSPEND)
-	default n
+	default y
 	help
+	  The MSM Frequency Limiter Driver controls max frequency limit for each CPU
+	  to desired value on suspend/resume
+
 
 
 config PVS_LEVEL_INTERFACE
