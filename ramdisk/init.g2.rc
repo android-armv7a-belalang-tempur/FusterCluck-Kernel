@@ -99,6 +99,12 @@ on boot
 
     # Enable DEBUG_SUSPEND, DEBUG_EXIT_SUSPEND, and DEBUG_WAKEUP
     write /sys/module/wakelock/parameters/debug_mask 7
+    
+    #intelliplug access for power HAL
+    chmod 0222 /sys/kernel/intelli_plug/perf_boost
+    chown system system /sys/kernel/intelli_plug/perf_boost
+    chmod 0666 /sys/module/intelli_plug/parameters/nr_run_profile_sel
+    chown system system /sys/module/intelli_plug/parameters/nr_run_profile_sel
 
     #To allow interfaces to get v6 address when tethering is enabled
     write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
