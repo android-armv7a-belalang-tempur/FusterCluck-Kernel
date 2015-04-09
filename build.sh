@@ -3,7 +3,7 @@
 # Script taken from RenderBroken and modified to be more automated.
 
 # Kernel Details
-VER=CM-Mod
+VER=CM-Mod-R1
 
 # Vars
 export LOCALVERSION=~`echo $VER`
@@ -90,8 +90,8 @@ echo "Kernel BUMP done!";
 echo "Zipping..."
 cp -r zip_script/. ozip/
 cd ozip
-zip -r "$kernel"-"$rom"_"$variant"-bumped.zip .
-mv "$kernel"-"$rom"_"$variant"-bumped.zip ../$build
+zip -r "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
+mv "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
 cd ..
 rm -rf /out/g2/*
 echo "Done..."
