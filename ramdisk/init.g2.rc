@@ -99,13 +99,6 @@ on boot
 
     # Enable DEBUG_SUSPEND, DEBUG_EXIT_SUSPEND, and DEBUG_WAKEUP
     write /sys/module/wakelock/parameters/debug_mask 7
-    
-    #intelliplug access for power HAL
-    chmod 0222 /sys/kernel/intelli_plug/perf_boost
-    chown system system /sys/kernel/intelli_plug/perf_boost
-    chmod 0666 /sys/module/intelli_plug/parameters/nr_run_profile_sel
-    chown system system /sys/module/intelli_plug/parameters/nr_run_profile_sel
-   
 
     #To allow interfaces to get v6 address when tethering is enabled
     write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
@@ -176,14 +169,6 @@ on post-fs-data
 
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
-
-    #Create directories for Location services
-    mkdir /data/misc/location 0770 gps gps
-    mkdir /data/misc/location/mq 0770 gps gps
-    mkdir /data/misc/location/xtwifi 0770 gps gps
-    mkdir /data/misc/location/gpsone_d 0770 system gps
-    mkdir /data/misc/location/quipc 0770 gps system
-    mkdir /data/misc/location/gsiff 0770 gps gps
 
     # Make sure the default firmware is loaded
     write /sys/module/bcmdhd/parameters/firmware_path "/system/etc/firmware/fw_bcmdhd.bin"
@@ -299,7 +284,6 @@ on post-fs-data
     restorecon /sys/devices/platform/tspdrv/nforce_timed
     restorecon /sys/devices/platform/kcal_ctrl.0/kcal
     restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
-     
 
 on charger
     trigger charger-fs

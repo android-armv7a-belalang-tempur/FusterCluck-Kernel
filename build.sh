@@ -3,7 +3,7 @@
 # Script taken from RenderBroken and modified to be more automated.
 
 # Kernel Details
-VER=CM-Mod-R1
+VER=Yoinx-Alpha
 
 # Vars
 export LOCALVERSION=~`echo $VER`
@@ -14,10 +14,11 @@ export KBUILD_BUILD_HOST=localhost
 export CCACHE=ccache
 
 build=zips/
-kernel="CM-Mod"
+kernel="Yoinx"
 
 ##### Main Toolchain
 toolchain=/media/joe/linux_storage/toolchains/linaro-4.9/bin
+# toolchain=/media/joe/linux_storage/SaberMod/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-SM-4.8/bin
 #####
 
 toolchain2="arm-eabi-"
