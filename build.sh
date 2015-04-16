@@ -17,8 +17,8 @@ build=zips/
 kernel="Yoinx"
 
 ##### Main Toolchain
-toolchain=/media/joe/linux_storage/toolchains/linaro-4.9/bin
-# toolchain=/media/joe/linux_storage/SaberMod/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-SM-4.8/bin
+# toolchain=/media/joe/linux_storage/toolchains/linaro-4.9/bin
+toolchain=/media/joe/linux_storage/toolchains/sabermod-4.9/bin
 #####
 
 toolchain2="arm-eabi-"
