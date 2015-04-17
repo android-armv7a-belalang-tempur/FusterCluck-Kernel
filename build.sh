@@ -3,7 +3,22 @@
 # Script taken from RenderBroken and modified to be more automated.
 
 # Kernel Details
-VER=Yoinx-Alpha
+
+# Get current build number
+if [ ! -f build_number.txt ]; then 
+old_build_num=0
+else
+old_build_num=$(head -1 build_number.txt)
+fi
+build_num=$((old_build_num + 1))
+# Overwrite build_number.txt for next time
+echo $build_num > build_number.txt
+
+# Get Date tag builds
+DATE=`date +%Y-%m-%d`
+
+VER=Alpha-Build_$build_num-$DATE
+
 
 # Vars
 export LOCALVERSION=~`echo $VER`
@@ -23,16 +38,15 @@ toolchain=/media/joe/linux_storage/toolchains/sabermod-4.9/bin
 
 toolchain2="arm-eabi-"
 kerneltype="zImage"
-jobcount="-j5"
+jobcount="-j7"
 base=0x00000000
 pagesize=2048
 ramdisk_offset=0x05000000
 tags_offset=0x04800000
-CURRENTDATE=$(date +"%m-%d")
 variant="vs980"
 config="vs980_defconfig"
 cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0"
-rom="LP"
+rom="LP_5.1"
 ramdisk=ramdisk/
 
 # Make required directories if they don't exist.
