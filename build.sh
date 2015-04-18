@@ -44,7 +44,7 @@ ramdisk_offset=0x05000000
 tags_offset=0x04800000
 variant="vs980"
 config="vs980_defconfig"
-cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0"
+cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0 androidboot.selinux=permissive"
 rom="LP_5.1"
 ramdisk=ramdisk/
 
