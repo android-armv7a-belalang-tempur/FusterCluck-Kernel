@@ -32,13 +32,12 @@ build=zips/
 kernel="Yoinx"
 
 ##### Main Toolchain
-# toolchain=/media/joe/linux_storage/toolchains/linaro-4.9/bin
-toolchain=/media/joe/linux_storage/toolchains/sabermod-4.9/bin
+toolchain=toolchains/sabermod-4.9/bin
 #####
 
 toolchain2="arm-eabi-"
 kerneltype="zImage"
-jobcount="-j7"
+jobcount="-j5"
 base=0x00000000
 pagesize=2048
 ramdisk_offset=0x05000000
