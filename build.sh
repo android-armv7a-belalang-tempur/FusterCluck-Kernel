@@ -55,15 +55,15 @@ mkdir -p ozip
 
 
 # Begin commands
-# rm -rf out/g2/*
+ rm -rf out/g2/*
 			export ARCH=arm
 			export CROSS_COMPILE=$toolchain/"$toolchain2"
 			rm -rf ozip/boot.img
 			rm -rf ozip/system/lib/modules
 			rm -rf arch/arm/boot/"$kerneltype"
 			mkdir -p ozip/system/lib/modules
-#			make clean && make mrproper
-#			echo "Working directory cleaned..."
+			make clean && make mrproper
+			echo "Working directory cleaned..."
 			make "$config"
 			make "$jobcount" CONFIG_DEBUG_SECTION_MISMATCH=y
 

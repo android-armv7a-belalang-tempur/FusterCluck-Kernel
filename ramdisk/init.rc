@@ -549,8 +549,9 @@ service netd /system/bin/netd
 service debuggerd /system/bin/debuggerd
     class main
 
-service debuggerd64 /system/bin/debuggerd64
-    class main
+# This binary doesn't exist
+# service debuggerd64 /system/bin/debuggerd64
+#    class main
 
 service ril-daemon /system/bin/rild
     class main
