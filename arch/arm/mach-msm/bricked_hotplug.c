@@ -27,7 +27,6 @@
 #include <linux/state_notifier.h>
 #else
 #include <linux/fb.h>
-#include <linux/notifier.h>
 #endif
 
 #define DEBUG 0
@@ -282,10 +281,47 @@ static void bricked_hotplug_suspend(struct work_struct *work)
 			cpu_online(0), cpu_online(1), cpu_online(2), cpu_online(3));
 }
 
+static void __ref bricked_hotplug_resume(struct work_struct *work)
+{
+	int cpu, required_reschedule = 0, required_wakeup = 0;
+
+	if (hotplug.suspended) {
+		mutex_lock(&hotplug.bricked_hotplug_mutex);
+		hotplug.suspended = 0;
+		hotplug.min_cpus_online = hotplug.min_cpus_online_res;
+		hotplug.max_cpus_online = hotplug.max_cpus_online_res;
+		mutex_unlock(&hotplug.bricked_hotplug_mutex);
+		required_wakeup = 1;
+		/* Initiate hotplug work if it was cancelled */
+		if (hotplug.max_cpus_online_susp <= 1) {
+			required_reschedule = 1;
+			INIT_DELAYED_WORK(&hotplug_work, bricked_hotplug_work);
+		}
+	}
+
+	if (required_wakeup) {
+		/* Fire up all CPUs */
+		for_each_cpu_not(cpu, cpu_online_mask) {
+			if (cpu == 0)
+				continue;
+			cpu_up(cpu);
+			apply_down_lock(cpu);
+		}
+	}
+
+	/* Resume hotplug workqueue if required */
+	if (required_reschedule) {
+		queue_delayed_work(hotplug_wq, &hotplug_work, 0);
+		pr_info(MPDEC_TAG": Screen -> on. Activated bricked hotplug. | Mask=[%d%d%d%d]\n",
+				cpu_online(0), cpu_online(1), cpu_online(2), cpu_online(3));
+	}
+}
+
 static void __bricked_hotplug_resume(void)
 {
 	if (!hotplug.bricked_enabled)
 		return;
+
 	flush_workqueue(susp_wq);
 	cancel_delayed_work_sync(&suspend_work);
 	queue_work_on(0, susp_wq, &resume_work);
@@ -357,7 +393,7 @@ static int bricked_hotplug_start(void)
 	hotplug_wq = alloc_workqueue("bricked_hotplug", WQ_HIGHPRI | WQ_FREEZABLE, 0);
 	if (!hotplug_wq) {
 		ret = -ENOMEM;
-		goto err_dev;
+		goto err_out;
 	}
 
 	susp_wq =
@@ -366,7 +402,7 @@ static int bricked_hotplug_start(void)
 		pr_err("%s: Failed to allocate suspend workqueue\n",
 		       MPDEC_TAG);
 		ret = -ENOMEM;
-		goto err_out;
+		goto err_dev;
 	}
 
 #ifdef CONFIG_STATE_NOTIFIER
@@ -377,9 +413,7 @@ static int bricked_hotplug_start(void)
 		goto err_susp;
 	}
 #else
-
 	notif.notifier_call = fb_notifier_callback;
-
 	if (fb_register_client(&notif)) {
 		pr_err("%s: Failed to register FB notifier callback\n",
 			MPDEC_TAG);
