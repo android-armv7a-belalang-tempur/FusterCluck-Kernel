@@ -3087,7 +3087,7 @@ endif
 
 config BRICKED_HOTPLUG
 	bool "Enable kernel based mpdecision"
-	depends on MSM_RUN_QUEUE_STATS
+	depends on MSM_SMP
 	default n
 	help
 	  This enables kernel based multi core control.
