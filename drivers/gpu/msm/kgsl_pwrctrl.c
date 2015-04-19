@@ -46,7 +46,7 @@
 #define MAX_UDELAY		2000
 
 #ifdef CONFIG_CPU_FREQ_GOV_ELEMENTALX
-int graphics_boost = 6;
+int graphics_boost = 1;
 #endif
 
 struct clk_pair {
