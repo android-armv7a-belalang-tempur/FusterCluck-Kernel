@@ -54,16 +54,21 @@ mkdir -p out/g2
 mkdir -p ozip
 
 
+
 # Begin commands
- rm -rf out/g2/*
-			export ARCH=arm
-			export CROSS_COMPILE=$toolchain/"$toolchain2"
-			rm -rf ozip/boot.img
+			if [ "$1" = "dirty" ]; then
+			echo "Building Dirty"
+			else
+			rm -rf out/g2/*
+ 			make clean && make mrproper
+ 			rm -rf ozip/boot.img
 			rm -rf ozip/system/lib/modules
 			rm -rf arch/arm/boot/"$kerneltype"
-			mkdir -p ozip/system/lib/modules
-			make clean && make mrproper
 			echo "Working directory cleaned..."
+			fi
+			export ARCH=arm
+			export CROSS_COMPILE=$toolchain/"$toolchain2"
+			mkdir -p ozip/system/lib/modules
 			make "$config"
 			make "$jobcount" CONFIG_DEBUG_SECTION_MISMATCH=y
 
