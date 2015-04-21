@@ -4461,7 +4461,7 @@ static int reg_access(unsigned int reg)
 			if (soundcontrol.playback_lock)
                                 ret = 0;
                         break;
-		case TAIKO_A_CDC_RX3_VOL_CTL_B2_CTL:
+		case TAIKO_A_CDC_RX7_VOL_CTL_B2_CTL:
 			if (soundcontrol.speaker_lock)
                                 ret = 0;
 			break;
@@ -7406,10 +7406,10 @@ void update_speaker_gain(int vol_boost)
 
 	soundcontrol.speaker_lock = false;
 	taiko_write(soundcontrol.snd_control_codec,
-		TAIKO_A_CDC_RX3_VOL_CTL_B2_CTL, boosted_val);
+		TAIKO_A_CDC_RX7_VOL_CTL_B2_CTL, boosted_val);
 	soundcontrol.speaker_lock = true;
 
-	pr_info("Sound Control: Boosted Speaker RX3 value %d\n",
+	pr_info("Sound Control: Boosted Speaker RX7 value %d\n",
 		taiko_read(soundcontrol.snd_control_codec,
 		TAIKO_A_CDC_RX3_VOL_CTL_B2_CTL));
 }
