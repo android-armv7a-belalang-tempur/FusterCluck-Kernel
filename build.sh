@@ -113,4 +113,6 @@ zip -r "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
 mv "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
 cd ..
 rm -rf /out/g2/*
-echo "Done..."
+echo " "
+tput setaf 1; echo "Finished Building "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip"; tput sgr 0
+echo "Done..." 
