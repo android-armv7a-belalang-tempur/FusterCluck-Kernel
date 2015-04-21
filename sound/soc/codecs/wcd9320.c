@@ -4442,7 +4442,6 @@ static int taiko_volatile(struct snd_soc_codec *ssc, unsigned int reg)
 extern int snd_hax_reg_access(unsigned int);
 extern unsigned int snd_hax_cache_read(unsigned int);
 extern void snd_hax_cache_write(unsigned int, unsigned int);
-#endif
 
 #ifndef CONFIG_SOUND_CONTROL_HAX_3_GPL
 static
