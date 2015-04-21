@@ -114,5 +114,9 @@ mv "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
 cd ..
 rm -rf /out/g2/*
 echo " "
-tput setaf 1; echo "Finished Building "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip"; tput sgr 0
+if [ -f zips/"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ]; then 
+tput setaf 2; echo "Finished Building "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip"; tput sgr 0
+else 
+tput setaf 1; echo "BUILD FAILED!"; tput sgr 0
+fi
 echo "Done..." 
