@@ -20,6 +20,9 @@ on boot
     chown system system /sys/kernel/intelli_plug/perf_boost
     chmod 0666 /sys/module/intelli_plug/parameters/nr_run_profile_sel
     chown system system /sys/module/intelli_plug/parameters/nr_run_profile_sel
+    
+	# Enable Bricked mpdecision by default.
+	write /sys/kernel/msm_mpdecision/conf/enabled 1
 
 on fs
     # LGE_UPDATE_START, 2013/04/16, for eri G2-FS@lge.com
