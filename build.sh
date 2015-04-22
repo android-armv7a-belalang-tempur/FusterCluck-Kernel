@@ -17,7 +17,7 @@ echo $build_num > build_number.txt
 # Get Date tag builds
 DATE=`date +%Y-%m-%d`
 
-VER=Build_$build_num-$DATE
+VER=FusterCluck-R1-Build_$build_num-$DATE
 
 
 # Vars
