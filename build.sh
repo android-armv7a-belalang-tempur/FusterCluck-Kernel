@@ -47,7 +47,7 @@ config="vs980_defconfig"
 cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0 androidboot.selinux=permissive"
 rom="LP_5.1"
 ramdiskcm=ramdisks/non-stock/
-ramdiskstock=ramdisks/non-stock/
+ramdiskstock=ramdisks/stock/
 
 # Make required directories if they don't exist.
 mkdir -p zips
