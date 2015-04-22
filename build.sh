@@ -17,7 +17,7 @@ echo $build_num > build_number.txt
 # Get Date tag builds
 DATE=`date +%Y-%m-%d`
 
-VER=Alpha-Build_$build_num-$DATE
+VER=Build_$build_num-$DATE
 
 
 # Vars
@@ -29,7 +29,7 @@ export KBUILD_BUILD_HOST=localhost
 export CCACHE=ccache
 
 build=zips/
-kernel="Yoinx"
+kernel="FusterCluck"
 
 ##### Main Toolchain
 toolchain=toolchains/sabermod-4.9/bin
