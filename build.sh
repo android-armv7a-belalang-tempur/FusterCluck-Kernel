@@ -46,7 +46,6 @@ variant="vs980"
 config="vs980_defconfig"
 cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0 androidboot.selinux=permissive"
 rom="LP_5.1"
-ramdisk=ramdisk/
 
 # Make required directories if they don't exist.
 mkdir -p zips
@@ -93,7 +92,9 @@ else
 	exit 0;
 fi
 
-echo "Making boot.img..."
+ramdisk=ramdisks/non-stock/
+
+echo "Making cm/aosp boot.img..."
 if [ -f out/g2/"$kerneltype" ]; then
 	./mkbootimg --kernel out/g2/"$kerneltype" --ramdisk $ramdisk --cmdline "$cmdline" --base $base --pagesize $pagesize --offset $ramdisk_offset --tags-addr $tags_offset --dt out/g2/dt.img -o ozip/boot.img
 else
@@ -101,7 +102,7 @@ else
 	exit 0;
 fi
 
-echo "Kernel Bump Boot.img..."
+echo "Kernel Bump CM Boot.img..."
 sh kernel_bump.sh
 mv ozip/boot_bumped.img ozip/boot.img
 echo "Kernel BUMP done!";
@@ -109,9 +110,30 @@ echo "Kernel BUMP done!";
 echo "Zipping..."
 cp -r zip_script/. ozip/
 cd ozip
-zip -r "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
-mv "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
-cd ..
+zip -r cm-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
+mv cm-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
+
+ramdisk=ramdisks/stock/
+rm out/boot.img
+echo "Making stock boot.img..."
+if [ -f out/g2/"$kerneltype" ]; then
+	./mkbootimg --kernel out/g2/"$kerneltype" --ramdisk $ramdisk --cmdline "$cmdline" --base $base --pagesize $pagesize --offset $ramdisk_offset --tags-addr $tags_offset --dt out/g2/dt.img -o ozip/boot.img
+else
+	echo "No build found..."
+	exit 0;
+fi
+
+echo "Kernel Bump Stock Boot.img..."
+sh kernel_bump.sh
+mv ozip/boot_bumped.img ozip/boot.img
+echo "Kernel BUMP done!";
+
+echo "Zipping..."
+cp -r zip_script/. ozip/
+cd ozip
+zip -r Stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
+mv stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
+
 rm -rf /out/g2/*
 echo " "
 if [ -f zips/"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ]; then 
