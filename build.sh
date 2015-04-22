@@ -46,6 +46,8 @@ variant="vs980"
 config="vs980_defconfig"
 cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0 androidboot.selinux=permissive"
 rom="LP_5.1"
+ramdiskcm=ramdisks/non-stock/
+ramdiskstock=ramdisks/non-stock/
 
 # Make required directories if they don't exist.
 mkdir -p zips
@@ -72,8 +74,12 @@ mkdir -p ozip
 			make "$jobcount" CONFIG_DEBUG_SECTION_MISMATCH=y
 
 	echo "Creating AOSP Ramdisk..."
-	./mkbootfs $ramdisk | gzip > out/g2/ramdisk.gz
-	ramdisk=out/g2/ramdisk.gz
+	./mkbootfs $ramdiskcm | gzip > out/g2/ramdiskcm.gz
+	ramdiskcm=out/g2/ramdiskcm.gz
+	echo "Creating Stock Ramdisk..."
+	./mkbootfs $ramdiskstock | gzip > out/g2/ramdiskstock.gz
+	ramdiskstock=out/g2/ramdiskstock.gz
+	
 cp arch/arm/boot/$kerneltype out/g2/$kerneltype
 
 # Create the required dtb files. 
@@ -92,11 +98,11 @@ else
 	exit 0;
 fi
 
-ramdisk=ramdisks/non-stock/
+
 
 echo "Making cm/aosp boot.img..."
 if [ -f out/g2/"$kerneltype" ]; then
-	./mkbootimg --kernel out/g2/"$kerneltype" --ramdisk $ramdisk --cmdline "$cmdline" --base $base --pagesize $pagesize --offset $ramdisk_offset --tags-addr $tags_offset --dt out/g2/dt.img -o ozip/boot.img
+	./mkbootimg --kernel out/g2/"$kerneltype" --ramdisk $ramdiskcm --cmdline "$cmdline" --base $base --pagesize $pagesize --offset $ramdisk_offset --tags-addr $tags_offset --dt out/g2/dt.img -o ozip/boot.img
 else
 	echo "No build found..."
 	exit 0;
@@ -112,12 +118,12 @@ cp -r zip_script/. ozip/
 cd ozip
 zip -r cm-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
 mv cm-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
+cd ..
+rm -rf /ozip/*
 
-ramdisk=ramdisks/stock/
-rm out/boot.img
 echo "Making stock boot.img..."
 if [ -f out/g2/"$kerneltype" ]; then
-	./mkbootimg --kernel out/g2/"$kerneltype" --ramdisk $ramdisk --cmdline "$cmdline" --base $base --pagesize $pagesize --offset $ramdisk_offset --tags-addr $tags_offset --dt out/g2/dt.img -o ozip/boot.img
+	./mkbootimg --kernel out/g2/"$kerneltype" --ramdisk $ramdiskstock --cmdline "$cmdline" --base $base --pagesize $pagesize --offset $ramdisk_offset --tags-addr $tags_offset --dt out/g2/dt.img -o ozip/boot.img
 else
 	echo "No build found..."
 	exit 0;
@@ -131,14 +137,21 @@ echo "Kernel BUMP done!";
 echo "Zipping..."
 cp -r zip_script/. ozip/
 cd ozip
-zip -r Stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
+zip -r stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip .
 mv stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ../$build
+cd ..
+rm -rf ozip/*
+rm -rf out/g2/*
 
-rm -rf /out/g2/*
 echo " "
-if [ -f zips/"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ]; then 
-tput setaf 2; echo "Finished Building "$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip"; tput sgr 0
+if [ -f zips/cm-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ]; then 
+tput setaf 2; echo "Finished Building cm-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip"; tput sgr 0
 else 
-tput setaf 1; echo "BUILD FAILED!"; tput sgr 0
+tput setaf 1; echo "CM BUILD FAILED!"; tput sgr 0
+fi
+if [ -f zips/stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip ]; then 
+tput setaf 2; echo "Finished Building stock-"$kernel"-"$rom"_"$variant"-"$VER"-bumped.zip"; tput sgr 0
+else 
+tput setaf 1; echo "STOCK BUILD FAILED!"; tput sgr 0
 fi
 echo "Done..." 
