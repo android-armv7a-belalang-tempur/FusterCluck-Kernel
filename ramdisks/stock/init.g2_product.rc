@@ -15,6 +15,11 @@ on boot
     chmod 0755 /system/bin/iwland
 #20130405 iwlan eyes0814@lge.com [END] -----------------------
 
+    #intelliplug access for power HAL
+    chmod 0222 /sys/kernel/intelli_plug/perf_boost
+    chown system system /sys/kernel/intelli_plug/perf_boost
+    chmod 0666 /sys/module/intelli_plug/parameters/nr_run_profile_sel
+    chown system system /sys/module/intelli_plug/parameters/nr_run_profile_sel
 
 on fs
     # LGE_UPDATE_START, 2013/04/16, for eri G2-FS@lge.com
