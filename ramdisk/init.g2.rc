@@ -307,6 +307,9 @@ on post-fs-data
     restorecon /sys/devices/platform/tspdrv/nforce_timed
     restorecon /sys/devices/platform/kcal_ctrl.0/kcal
     restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
+    
+# Enable Bricked mpdecision by default.
+	write /sys/kernel/msm_mpdecision/conf/enabled 1
 
 on charger
     trigger charger-fs
