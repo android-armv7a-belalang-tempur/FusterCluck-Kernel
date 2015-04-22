@@ -148,11 +148,11 @@ static ssize_t camera_mic_boost_store(struct device *dev,
 	sscanf(buf, "%d", &new_val);
 
 	if (new_val != camera_mic_boost) {
-		if (new_val <= camera_mic_boost_limit_min)
-			new_val = camera_mic_boost_limit_min;
+		if (new_val <= camera_mic_limit_min)
+			new_val = camera_mic_limit_min;
 
-		else if (new_val >= camera_mic_boost_limit)
-			new_val = camera_mic_boost_limit;
+		else if (new_val >= camera_mic_limit)
+			new_val = camera_mic_limit;
 
 		pr_info("New camera_mic_boost: %d\n", new_val);
 

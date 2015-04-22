@@ -56,7 +56,7 @@ struct sound_control {
 	.playback_lock = false,
 	.speaker_lock = false,
 	.recording_lock = false,
-	.camera_recording_lock = false;
+	.camera_recording_lock = false,
 };
 
 #ifdef CONFIG_SND_SOC_ES325_SLIM
