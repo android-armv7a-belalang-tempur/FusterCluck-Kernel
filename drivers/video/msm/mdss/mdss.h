@@ -133,6 +133,7 @@ struct mdss_data_type {
 	u8 has_wfd_blk;
 	u32 has_no_lut_read;
 	u8 has_wb_ad;
+	bool idle_pc_enabled;
 
 	u32 rotator_ot_limit;
 	u32 mdp_irq_mask;
