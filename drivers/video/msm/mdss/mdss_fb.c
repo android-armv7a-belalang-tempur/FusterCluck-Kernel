@@ -952,9 +952,6 @@ void mdss_fb_set_backlight(struct msm_fb_data_type *mfd, u32 bkl_lvl)
 
 		if (mfd->bl_level_scaled == temp) {
 			mfd->bl_level = bkl_lvl;
-#ifdef CONFIG_MACH_MSM8974_G2
-			if (mfd->bl_level != 0)
-#endif
 		} else {
 			pr_debug("backlight sent to panel :%d\n", temp);
 			pdata->set_backlight(pdata, temp);
