@@ -3115,11 +3115,11 @@ config MSM_LIMITER
 
 
 config PVS_LEVEL_INTERFACE
-	bool "Expose PVS level information in sys fs (Boeffla-Kernel)"
+	bool "Expose PVS level information in sys fs"
 	help
-	 Allow PVS level to be shown in Boeffla-Config app
+	 Allow PVS level to be shown in some kernel apps
 
 config SPEED_LEVEL_INTERFACE
         bool "Expose SPEED level information in sys fs"
         help
-         Allow SPEED level to be shown into specific kernel apps
+         Allow SPEED level to be shown in some kernel apps
