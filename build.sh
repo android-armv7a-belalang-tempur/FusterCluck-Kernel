@@ -82,7 +82,7 @@ mkdir -p ozip
 	
 cp arch/arm/boot/$kerneltype out/g2/$kerneltype
 # Make sure we grab our modules.
-mdir -p ozip/system/lib/modules
+mkdir -p ozip/system/lib/modules
 find . -name "*.ko" -exec cp {} ozip/system/lib/modules \;
 
 # Create the required dtb files. 
