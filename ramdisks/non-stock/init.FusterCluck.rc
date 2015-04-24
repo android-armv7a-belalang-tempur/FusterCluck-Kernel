@@ -1,10 +1,10 @@
 chmod 0750 /sbin/FusterCluck_post_boot.sh
 
-service FusterCluck_post_boot /system/bin/sh /sbin/FusterCluck_post_boot.sh
+service fustercluck /system/bin/sh /sbin/FusterCluck_post_boot.sh
     class late_start
     user root
     disabled
     oneshot
 
 on property:sys.boot_completed=1
-    start FusterCluck_post_boot
+    start fustercluck
