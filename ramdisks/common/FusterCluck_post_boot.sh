@@ -6,6 +6,8 @@ BB=/sbin/bb/busybox
 # Custom Kernel Settings for FusterCluck Kernel!!
 # Adpted from RenderBroken's Script.
 #
+
+# mpdecision shouldn't be running, but stop it just in case it is.
 stop mpdecision
 echo "[FusterCluck-Kernel] Boot Script Started" | tee /dev/kmsg
 
@@ -20,6 +22,10 @@ chown system system /sys/module/intelli_plug/parameters/nr_run_profile_sel
 
 # Turn on Intelliplug by default
 echo 1 > /sys/module/intelli_plug/parameters/intelli_plug_active
+
+# Limit max screen off frequency
+echo 1497600 > /sys/module/intelli_plug/parameters/screen_off_max
+
 
 ############################
 # MSM_Hotplug Settings
@@ -49,6 +55,25 @@ echo 'westwood' /proc/sys/net/ipv4/tcp_congestion_control
 # Power Effecient Workqueues (Enable for battery)
 #
 echo 1 > /sys/module/workqueue/parameters/power_efficient
+
+############################
+# CPU Multi-Core Power Savint (Enable for battery)
+#
+
+echo 1 > /sys/devices/system/cpu/sched_mc_power_savings
+
+############################
+# MSM Limiter
+#
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_0
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_1
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_2
+echo 300000 > /sys/kernel/msm_limiter/suspend_min_freq_3
+echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_0
+echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_1
+echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_2
+echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_3
+echo 1497000 > /sys/kernel/msm_limiter/suspend_max_freq
 
 ############################
 # Scheduler and Read Ahead
@@ -117,7 +142,7 @@ echo "0" > /sys/module/kernel/parameters/initcall_debug;
 echo "0" > /sys/module/alarm_dev/parameters/debug_mask;
 echo "0" > /sys/module/binder/parameters/debug_mask;
 echo "0" > /sys/module/xt_qtaguid/parameters/debug_mask;
-echo "[Render-Kernel] disable debug mask" | tee /dev/kmsg
+echo "[FusterCluck-Kernel] disable debug mask" | tee /dev/kmsg
 
 ############################
 # TCP Stack Tweaks
@@ -154,7 +179,7 @@ echo 500 > /sys/kernel/mm/ksm/sleep_milliseconds
 #
 # I like to setup 3 degrees below defaults, for safety.
 
-echo 68 > /sys/kernel/msm_thermal/conf/cat allowed_low_high
+echo 68 > /sys/kernel/msm_thermal/conf/allowed_low_high
 echo 65 > /sys/kernel/msm_thermal/conf/allowed_low_low
 echo 1497600 > /sys/kernel/msm_thermal/conf/allowed_low_freq 
 echo 75 > /sys/kernel/msm_thermal/conf/allowed_mid_high 
@@ -181,6 +206,13 @@ echo intelliactive > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
 # Thses are just my sound preferences, set thema as you like.
 
 echo 6 > /sys/devices/virtual/misc/soundcontrol/speaker_boost
-echo 2 > /sys/devices/virtual/misc/soundcontrol/speaker_boost
+echo 2 > /sys/devices/virtual/misc/soundcontrol/volume_boost
+
+############################
+# Limit GPU to 389mhz to save some power.
+#
+
+echo 389000000 > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk
+
 
 echo "[FusterCluck-Kernel] Boot Script Completed!" | tee /dev/kmsg

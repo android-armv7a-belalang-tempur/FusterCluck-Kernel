@@ -8,3 +8,49 @@ service fustercluck /system/bin/sh /sbin/FusterCluck_post_boot.sh
 
 on property:sys.boot_completed=1
     start fustercluck
+
+
+
+################################### 
+# Borrowed from init.eos.rc
+# Relocating it here so that it's shared between build types
+##################################
+
+    # Define TCP delayed ack settings for WiFi & LTE
+    chown system system /sys/kernel/ipv4/tcp_delack_seg
+    chown system system /sys/kernel/ipv4/tcp_use_userconfig
+    setprop net.tcp.delack.default     1
+    setprop net.tcp.delack.wifi        20
+    setprop net.tcp.delack.lte         8
+    setprop net.tcp.usercfg.default    0
+    setprop net.tcp.usercfg.wifi       1
+    setprop net.tcp.usercfg.lte        1
+
+# adb over network
+on property:service.adb.tcp.port=5555
+    stop adbd
+    start adbd
+on property:service.adb.tcp.port=-1
+    stop adbd
+    start adbd
+
+# sysinit (/system/etc/init.d)
+service sysinit /system/bin/sysinit
+    user root
+    oneshot
+    disabled
+
+# init.d (/system/etc/init.d)
+service userinit /system/xbin/busybox run-parts /system/etc/init.d
+    oneshot
+    class late_start
+    user root
+    group root
+
+on init
+    export ANDROID_CACHE /cache
+    export TERMINFO /system/etc/terminfo
+
+on post-fs-data
+    # Run sysinit
+    start sysinit
