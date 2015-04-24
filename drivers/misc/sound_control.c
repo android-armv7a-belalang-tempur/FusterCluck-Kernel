@@ -16,7 +16,7 @@ extern void update_mic_gain(int vol_boost);
 extern void update_camera_mic_gain(int vol_boost);
 
 /*
- * Headphone boost value
+ * Volume boost value
  */
 int headphones_boost = 0;
 int headphones_boost_limit = 20;
@@ -163,7 +163,7 @@ static ssize_t camera_mic_boost_store(struct device *dev,
     return size;
 }
 
-static DEVICE_ATTR(headphones_boost, 0664, headphones_boost_show, 
+static DEVICE_ATTR(volume_boost, 0664, headphones_boost_show, 
 	headphones_boost_store);
 static DEVICE_ATTR(speaker_boost, 0664, speaker_boost_show, 
 	speaker_boost_store);
@@ -173,7 +173,7 @@ static DEVICE_ATTR(camera_mic_boost, 0664, camera_mic_boost_show,
 
 static struct attribute *soundcontrol_attributes[] =
 {
-	&dev_attr_headphones_boost.attr,
+	&dev_attr_volume_boost.attr,
 	&dev_attr_speaker_boost.attr,
 	&dev_attr_mic_boost.attr,
 	&dev_attr_camera_mic_boost.attr,
