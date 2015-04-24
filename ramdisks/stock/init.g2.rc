@@ -9,3 +9,12 @@ import /init.lge.power.rc
 # LGE_CHANGE_S, [LGE_DATA][LGP_DATA_TCPIP_NSRM], heeyeon.nah@lge.com, 2012-05-22
 export LD_PRELOAD /vendor/lib/libNimsWrap.so
 # LGE_CHANGE_E, [LGE_DATA][LGP_DATA_TCPIP_NSRM], heeyeon.nah@lge.com, 2012-05-22
+
+service render-post-boot /system/bin/sh /sbin/FusterCluck-post_boot.sh
+    class late_start
+    user root
+    disabled
+    oneshot
+
+on property:sys.boot_completed=1
+    start FusterCluck-post-boot
