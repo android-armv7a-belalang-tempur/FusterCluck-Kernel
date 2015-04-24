@@ -45,6 +45,10 @@ config="vs980_defconfig"
 cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0 androidboot.selinux=permissive"
 rom="LP_5.1"
 
+# Move FusterCluck script into the ramdisks
+cp ramdisk/common/FusterCluck_post_boot.sh ramdisk/non-stock/sbin/FusterCluck_post_boot.sh
+cp ramdisk/common/FusterCluck_post_boot.sh ramdisk/stock/sbin/FusterCluck_post_boot.sh
+
 function start_build () {
 
 
@@ -152,6 +156,10 @@ fi
 # Start the magic!
 # allow for the possibility of dirty building by passing $1
 start_build cm $1
+
+# Remove the FusterCluck script so as to not make git think it needs to be commitedin the new location
+rm ramdisk/non-stock/sbin/FusterCluck_post_boot.sh
+rm ramdisk/stock/sbin/FusterCluck_post_boot.sh
 
 
 # Do some checking to see if everything was successfull or not.
