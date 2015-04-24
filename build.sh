@@ -76,10 +76,7 @@ mkdir -p ozip
 	echo "Creating AOSP Ramdisk..."
 	./mkbootfs $ramdiskcm | gzip > out/g2/ramdiskcm.gz
 	ramdiskcm=out/g2/ramdiskcm.gz
-	echo "Creating Stock Ramdisk..."
-	./mkbootfs $ramdiskstock | gzip > out/g2/ramdiskstock.gz
-	ramdiskstock=out/g2/ramdiskstock.gz
-	
+
 cp arch/arm/boot/$kerneltype out/g2/$kerneltype
 # Make sure we grab our modules.
 mkdir -p ozip/system/lib/modules
@@ -166,9 +163,6 @@ mkdir -p ozip
 			make "$config"
 			make "$jobcount" CONFIG_DEBUG_SECTION_MISMATCH=y
 
-	echo "Creating AOSP Ramdisk..."
-	./mkbootfs $ramdiskcm | gzip > out/g2/ramdiskcm.gz
-	ramdiskcm=out/g2/ramdiskcm.gz
 	echo "Creating Stock Ramdisk..."
 	./mkbootfs $ramdiskstock | gzip > out/g2/ramdiskstock.gz
 	ramdiskstock=out/g2/ramdiskstock.gz
