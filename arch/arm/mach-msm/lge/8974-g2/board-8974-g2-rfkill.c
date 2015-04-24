@@ -180,7 +180,7 @@ static void bcm_btlock_exit(void)
 /* ---BRCM */
 #endif /* defined(CONFIG_BCM4335BT) */
 static int bluetooth_set_power(void *data, bool blocked)
-
+{
 #if defined(CONFIG_LGE_STOCK_BLUETOOTH)
 #if defined(CONFIG_BCM4335BT)
 	/* +++BRCM 4335 AXI Patch */
