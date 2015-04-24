@@ -73,6 +73,10 @@ echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_0
 echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_1
 echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_2
 echo 1958000 > /sys/kernel/msm_limiter/resume_max_freq_3
+echo 1958000 > /sys/kernel/msm_limiter/live_max_freq_0
+echo 1958000 > /sys/kernel/msm_limiter/live_max_freq_1
+echo 1958000 > /sys/kernel/msm_limiter/live_max_freq_2
+echo 1958000 > /sys/kernel/msm_limiter/live_max_freq_3
 echo 1497000 > /sys/kernel/msm_limiter/suspend_max_freq
 
 ############################
