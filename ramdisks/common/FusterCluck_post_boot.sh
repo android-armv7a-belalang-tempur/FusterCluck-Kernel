@@ -49,7 +49,7 @@ echo 10 > /proc/sys/vm/swappiness
 ############################
 # Set TCP Congestion
 #
-echo 'westwood' /proc/sys/net/ipv4/tcp_congestion_control
+echo westwood > /proc/sys/net/ipv4/tcp_congestion_control
 
 ############################
 # Power Effecient Workqueues (Enable for battery)
