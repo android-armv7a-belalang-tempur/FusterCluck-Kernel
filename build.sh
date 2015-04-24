@@ -46,8 +46,8 @@ cmdline="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb
 rom="LP_5.1"
 
 # Move FusterCluck script into the ramdisks
-cp ramdisks/common/FusterCluck_post_boot.sh ramdisk/non-stock/sbin/FusterCluck_post_boot.sh
-cp ramdisks/common/FusterCluck_post_boot.sh ramdisk/stock/sbin/FusterCluck_post_boot.sh
+cp ramdisks/common/FusterCluck_post_boot.sh ramdisks/non-stock/sbin/FusterCluck_post_boot.sh
+cp ramdisks/common/FusterCluck_post_boot.sh ramdisks/stock/sbin/FusterCluck_post_boot.sh
 
 function start_build () {
 
