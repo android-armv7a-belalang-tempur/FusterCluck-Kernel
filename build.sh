@@ -30,7 +30,7 @@ build=zips/
 kernel="FusterCluck"
 
 ##### Main Toolchain
-toolchain=toolchains/sabermod-4.9/bin
+toolchain=../toolchains/sabermod-4.9/bin
 
 #####
 
