@@ -31,6 +31,7 @@ kernel="FusterCluck"
 
 ##### Main Toolchain
 toolchain=toolchains/sabermod-4.9/bin
+
 #####
 
 toolchain2="arm-eabi-"
@@ -56,6 +57,7 @@ if [ $1 = stock ]; then
 # Checkout stock files for bluetooth, these have been modified for CM
 git checkout d85ca4f17461a00d4898ee2e4c1e130474621ee7 drivers/bluetooth/bluesleep.c
 git checkout d85ca4f17461a00d4898ee2e4c1e130474621ee7 arch/arm/mach-msm/lge/8974-g2/board-8974-g2-rfkill.c
+git checkout d85ca4f17461a00d4898ee2e4c1e130474621ee7 drivers/leds/led-class.c
 fi
 
 case $1 in 
@@ -143,6 +145,7 @@ rm -rf out/g2/*
 if [ $1 = "stock" ]; then
 git checkout HEAD drivers/bluetooth/bluesleep.c
 git checkout HEAD arch/arm/mach-msm/lge/8974-g2/board-8974-g2-rfkill.c
+git checkout HEAD drivers/leds/led-class.c
 fi
 
 # Call function again from here to build stock
