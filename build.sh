@@ -30,8 +30,7 @@ build=zips/
 kernel="FusterCluck"
 
 ##### Main Toolchain
-toolchain=../toolchains/sabermod-4.9/bin
-
+toolchain=../toolchains/sabermod-5.1/bin
 #####
 
 toolchain2="arm-eabi-"
@@ -151,7 +150,7 @@ fi
 # Call function again from here to build stock
 # this should prevent a second build for stock if the first build for cm failed.
 if [ $1 = "cm" ]; then
-start_build stock
+ start_build stock
 fi
 
 } # end of build function 
