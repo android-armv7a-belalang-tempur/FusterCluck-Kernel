@@ -15,7 +15,7 @@ build_num=$((old_build_num + 1))
 # Get Date tag builds
 DATE=`date +%Y-%m-%d`
 
-VER=FusterCluck-R2-Build_$build_num-$DATE
+VER=FusterCluck-R3-Beta-Build_$build_num-$DATE
 
 
 # Vars
